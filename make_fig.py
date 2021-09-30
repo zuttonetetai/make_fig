@@ -13,7 +13,8 @@ def plt_plot(
         auto_adjust=False, 
         save_file=None,
         fs=None,
-        ax=True
+        ax=True,
+        linewidth=1
     ):
     """
     Input:
@@ -37,9 +38,9 @@ def plt_plot(
             if auto_adjust:
                 data += float(data_list[0].mean() - data.mean())
             if fs != None:
-                ax.plot([x/fs for x in range(len(data))], data, label=name, color=c, linewidth=1)
+                ax.plot([x/fs for x in range(len(data))], data, label=name, color=c, linewidth=linewidth)
             else:
-                ax.plot(range(len(data)), data, label=name, color=c, linewidth=1)
+                ax.plot(range(len(data)), data, label=name, color=c, linewidth=linewidth)
 
         #ax.set_xlim(0, 20)
         ax.set_xlabel(x_axis_title)
@@ -50,20 +51,20 @@ def plt_plot(
                 ax.legend(loc='best')
             elif legend == 'outer':
                 ax.legend(bbox_to_anchor=(1.01, 1), loc='upper left', borderaxespad=0)
-        ax.grid()
+        ax.grid(True)
         if save_file != None:
             fig.savefig(save_file,  bbox_inches='tight')
         return fig
 
     else:
-        fig = plt.figure()
+        fig = plt.figure(figsize=figsize)
         for data, label ,c in zip(data_list, data_label_list, color):
             if auto_adjust:
                 data += float(data_list[0].mean() - data.mean())
             if fs != None:
-                plt.plot([x/fs for x in range(len(data))], data, label=label, color=c)
+                plt.plot([x/fs for x in range(len(data))], data, label=label, color=c, linewidth=linewidth)
             else:
-                plt.plot(range(len(data)), data, label=label, color=c)
+                plt.plot(range(len(data)), data, label=label, color=c, linewidth=linewidth)
             
         # 時間軸に変換
         #xlocs, _ = plt.xticks()
